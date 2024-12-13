@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log In</title>
+    <link rel="icon" href="./../assets/images/logo/logo2.png" />
+
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body>
+    <form class="loginForm" id="loginForm">
+      <img
+        src="./../assets/images/logo/logo.avif"
+        alt="logoUPNA"
+        class="logoUPNA"
+      />
+
+      <label for="email">Correo electrónico:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="usuario@unavarra.es"
+        required
+      />
+      <label for="password">Contraseña:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="************************"
+        required
+      />
+      <button type="submit">Log In</button>
+      <p class="errorMSG" id="message"></p>
+
+      <p class="signup-link">
+        ¿Todavía no tienes cuenta?
+        <a href="./../signup/index.html">Registrarse</a>
+      </p>
+    </form>
+
+    <!-- Pop-up para el pin -->
+    <div id="pinPopup" class="popup">
+      <div class="popup-content">
+        <h3>Introduce el PIN de verificación</h3>
+        <input type="text" id="pin" placeholder="Introduce el PIN" required />
+        <button id="verifyPinButton">Verificar PIN</button>
+        <p class="errorMSG" id="pinMessage"></p>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel de Alumno</title>
+    <link rel="icon" href="./../assets/images/logo/logo2.png" />
+    <link rel="stylesheet" href="student.css" />
+  </head>
+  <body>
+    <!-- Sidebar con logo y menú -->
+    <aside class="sidebar">
+      <img
+        src="./../assets/images/logo/logo.avif"
+        alt="logoUPNA"
+        class="logoUPNA"
+      />
+      <button id="btnExamenes" class="menu-btn">Exámenes</button>
+      <button id="btnNotas" class="menu-btn">Notas</button>
+      <button id="logoutButton" class="menu-btn">Cerrar sesión</button>
+    </aside>
+
+    <!-- Contenedor para la tabla -->
+    <main>
+      <section id="content">
+        <table id="dataTable" class="styled-table">
+          <thead id="tableHead"></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </section>
+    </main>
+
+    <!-- Modal para mostrar los detalles del examen -->
+    <div id="examModal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('exam-details-modal')">&times;</span>
+        <div id="exam-details">
+          <!-- Aquí se mostrarán los detalles del examen -->
+        </div>
+        <div id = "questions-details">
+        <!-- Aquí se mostrarán los detalles de las preguntas del examen -->
+       </div> 
+      </div>
+    </div>
+
+    <div id="modalRevision" class="modal">
+      <div class="modal-content">
+        <header class="modal-header">
+          <button id="closeModalButton">Salir de la revisión</button>
+          <h3 id="modal-revision-title"></h3>
+          <h5 id="modal-revision-nota"></h5>
+        </header>
+        <main class="modal-body">
+          <div id="modal-revision-question"></div>
+          <div id="modal-revision-options"></div>
+          <div id="modal-revision-answer"></div>
+        </main>
+        <footer class="modal-footer">
+          <button class="modal-revision-manejo-button" id="prevQuestionButton">Anterior pregunta</button>
+          <button class="modal-revision-revisar-button" id="markForReviewButton">Marcar para revisar</button>
+          <button class="modal-revision-manejo-button" id="nextQuestionButton">Siguiente pregunta</button>
+        </footer>
+      </div>
+    </div>    
+
+    <script src="student.js"></script>
+  </body>
+</html>

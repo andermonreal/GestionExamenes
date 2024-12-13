@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profesor</title>
+    <link rel="icon" href="./../assets/images/logo/logo2.png" />
+
+    <link rel="stylesheet" href="profesor.css" />
+  </head>
+  <body>
+    <!-- Sidebar con logo y menú -->
+    <aside class="sidebar">
+      <img
+        src="./../assets/images/logo/logo.avif"
+        alt="logoUPNA"
+        class="logoUPNA"
+      />
+      <button class="menu-btn" onclick="showContent('preguntas')">
+        Preguntas
+      </button>
+      <button class="menu-btn" onclick="showContent('examenes')">
+        Exámenes
+      </button>
+      <button class="menu-btn" onclick="showContent('grupos')">
+        Grupos
+      </button>
+      <button class="menu-btn" onclick="showContent('preguntas-abiertas')">
+        Preguntas Abiertas
+      </button>
+      <button id="logoutButton">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+      </button>
+    </aside>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+      <!-- Sección de preguntas -->
+      <div id="preguntas-content" class="content-section" style="display: none">
+        <h2>Gestión de Preguntas</h2>
+        <div class="question-type-selector">
+          <button onclick="openModalForm('form-estandar')">
+            + Pregunta Estándar
+          </button>
+          <button onclick="openModalForm('form-multieleccion')">
+            + Pregunta Multi-elección
+          </button>
+          <button onclick="openModalForm('form-abierta')">
+            + Pregunta Abierta
+          </button>
+          <button id="favoriteFilterButton" onclick="toggleFavoriteFilter()">
+            Mostrar solo favoritas
+          </button>
+        </div>
+        <div class="table-container">
+          <!-- Tabla para mostrar las preguntas -->
+          <table id="questions-table">
+            <thead class="theadFixed">
+              <tr>
+                <th>ID</th>
+                <th>Texto</th>
+                <th>Tipo</th>
+                <th>Puntuación</th>
+                <th colspan="2">Acciones</th>
+                <th>Favorita</th>
+              </tr>
+            </thead>
+            <tbody id="questions-list">
+              <!-- Aquí se rellenará la lista de preguntas -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Popup para ver detalles -->
+      <div id="details-modal" class="modal details-modal">
+        <div class="modal-content">
+          <span class="close-btn" onclick="closeModal('details-modal')"
+            >&times;</span
+          >
+          <pre id="details-content"></pre>
+        </div>
+      </div>
+
+      <!-- Popup para asignar a examen -->
+      <div id="assign-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn" onclick="closeModal('assign-modal')"
+            >&times;</span
+          >
+          <form id="assign-form">
+            <label for="exam-id">Introduce la ID del examen al que desea añadir la pregunta:</label>
+            <input type="text" id="exam-id" required placeholder="ID..."/>
+            <button type="submit">Asignar</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Sección de exámenes -->
+      <div id="examenes-content" class="content-section" style="display: none">
+        <h2>Gestión de Exámenes</h2>
+        <p>
+          Aquí irán las funcionalidades relacionadas con la creación y gestión
+          de exámenes.
+          <div class="question-type-selector">
+            <!-- Botón para abrir el modal de creación de exámenes -->
+            <button onclick="openModal('create-exam-modal')">
+              Crear Examen
+            </button>
+          </div>
+        </p>
+        <!-- Tabla para mostrar las examenes -->
+        <table id="exams-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Fecha_Inicio</th>
+              <th>Fecha_Fin</th>
+              <th>Duración</th>
+              <th>Autocorrección</th>
+              <!-- <th>Acciones</th> -->
+            </tr>
+          </thead>
+          <tbody id="exams-list">
+            <!-- Aquí se rellenará la lista de examenes -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Modal para ver detalles de un examen -->
+      <div id="exam-details-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn" onclick="closeModal('exam-details-modal')">&times;</span>
+          <div id="exam-details">
+            <!-- Aquí se mostrarán los detalles del examen -->
+          </div>
+        </div>
+      </div>
+      
+      <!-- Popup para modificar un examen -->
+      <div id="details-modal" class="modal details-modal">
+        <div class="modal-content">
+          <span class="close-btn" onclick="closeModal('details-modal')"
+            >&times;</span
+          >
+          <pre id="details-content"></pre>
+        </div>
+      </div>
+
+      <!-- Sección de GRUPOS -->
+      <div id="grupos-content" class="content-section" style="display: none">
+        <h2>Gestión de Grupos</h2>
+        <div class="question-type-selector">
+          <!-- Botón para crear un grupo -->
+          <button onclick="openModal('create-group-modal'); setProfesorId()">
+            Crear Grupo
+          </button>            
+          <!-- Botón para abrir el modal de asignar alumno a grupo -->
+          <button onclick="openModal('assign-group-modal')">
+            Asignar Alumno a Grupo
+          </button>            
+        </div>
+          <table id="gruposTable">  
+            <thead>
+              <tr>
+                <th>ID Grupo</th>
+                <th>Nombre Grupo</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Las filas se generarán dinámicamente desde JavaScript -->
+            </tbody>
+          </table>
+      </div>
+
+      <!-- Modal para crear exámenes -->
+      <div id="create-exam-modal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal('create-exam-modal')">&times;</span>
+          <form id="create-exam-form">
+            <h2>Añadir Examen</h2>
+
+            <label for="examName">Nombre del Examen:</label>
+            <input
+              type="text"
+              id="examName"
+              name="examName"
+              placeholder="Nombre del examen"
+              required
+            />
+
+            <label for="examDateInicio">Fecha Inicio:</label>
+            <input
+              type="datetime-local"
+              id="examDateInicio"
+              name="examDateInicio"
+              required
+            />
+
+            <label for="examDateFin">Fecha Fin:</label>
+            <input
+              type="datetime-local"
+              id="examDateFin"
+              name="examDateFin"
+              required
+            />
+            <label for="examDuration">Duración (minutos):</label>
+            <input
+              type="number"
+              id="examDuration"
+              name="examDuration"
+              placeholder="Duración en minutos"
+              required
+              disabled
+              min="1"
+            />
+            <label for="autocorreccion">¿Autocorreccion?</label>
+            <select id="autocorreccion" name="autocorreccion">
+              <option value="true">Sí</option>
+              <option value="false">No</option>
+            </select>
+
+            <button type="submit">Añadir Examen</button>
+            <p class="errorMSG" id="message"></p>
+          </form>
+        </div>
+      </div>
+
+    <!-- Modal Popup -->
+    <div id="question-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('question-modal')"
+          >&times;</span
+        >
+        <div id="modal-body">
+          <!-- Formularios para cada tipo de pregunta -->
+          <!-- Formulario para pregunta estándar -->
+          <div id="form-estandar" class="question-form" style="display: none">
+            <h3>Crear Pregunta Estándar</h3>
+            <form id="standard-question-form">
+              <textarea
+                id="question-text"
+                name="question-text"
+                placeholder="Introduce el texto de la pregunta"
+                required
+              ></textarea>
+              <div>
+                <input
+                  type="text"
+                  name="opcion1"
+                  placeholder="Opción 1"
+                  required
+                />
+                <input type="radio" name="correcta" value="1" required />
+              </div>
+              <div>
+                <input
+                  type="text"
+                  name="opcion2"
+                  placeholder="Opción 2"
+                  required
+                />
+                <input type="radio" name="correcta" value="2" />
+              </div>
+              <div>
+                <input
+                  type="text"
+                  name="opcion3"
+                  placeholder="Opción 3"
+                  required
+                />
+                <input type="radio" name="correcta" value="3" /> 
+              </div>
+              <div>
+                <input
+                  type="text"
+                  name="opcion4"
+                  placeholder="Opción 4"
+                  required
+                />
+                <input type="radio" name="correcta" value="4" /> 
+              </div>
+              <input
+                type="number"
+                id="puntuacion"
+                name="puntuacion"
+                min="0"
+                placeholder="Puntuación"
+                required
+              />
+              <button type="submit">Crear Pregunta Estándar</button>
+            </form>
+          </div>
+
+          <!-- Formulario para pregunta multi-elección -->
+          <div
+            id="form-multieleccion"
+            class="question-form"
+            style="display: none"
+          >
+            <h3>Crear Pregunta Multi-elección</h3>
+            <form id="multi-choice-question-form">
+              <textarea
+                id="question-text-Multi"
+                name="question-text-Multi"
+                placeholder="Introduce el texto de la pregunta"
+                required
+              ></textarea>
+              <div>
+                <input
+                  type="text"
+                  name="opcion1Multi"
+                  placeholder="Opción 1"
+                  required
+                />
+                <input type="checkbox" name="correcta1" /> 
+              </div>
+              <div>
+                <input
+                  type="text"
+                  name="opcion2Multi"
+                  placeholder="Opción 2"
+                  required
+                />
+                <input type="checkbox" name="correcta2" /> 
+              </div>
+              <div>
+                <input
+                  type="text"
+                  name="opcion3Multi"
+                  placeholder="Opción 3"
+                  required
+                />
+                <input type="checkbox" name="correcta3" /> 
+              </div>
+              <div>
+                <input
+                  type="text"
+                  name="opcion4Multi"
+                  placeholder="Opción 4"
+                  required
+                />
+                <input type="checkbox" name="correcta4" /> 
+              </div>
+              <input
+                type="number"
+                id="puntuacionMulti"
+                name="puntuacionMulti"
+                min="0"
+                placeholder="Puntuación"
+                required
+              />
+
+              <button type="submit">Crear Pregunta Multi-elección</button>
+            </form>
+          </div>
+
+          <!-- Formulario para pregunta abierta -->
+          <div id="form-abierta" class="question-form" style="display: none">
+            <h3>Crear Pregunta Abierta</h3>
+            <form id="open-question-form">
+              <textarea
+                id="question-text-abierta"
+                name="question-text-abierta"
+                placeholder="Introduce el texto de la pregunta"
+                required
+              ></textarea>
+              <input
+                type="number"
+                id="puntuacion-abierta"
+                name="puntuacion-abierta"
+                min="0"
+                placeholder="Puntuación"
+                required
+              />
+              <button type="submit">Crear</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Popup para asignar alumnos a grupo -->
+    <div id="assign-group-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('assign-group-modal')">&times;</span>
+        <form id="assign-group-form" onsubmit="handleAssignAlumnos(event)">
+          <label for="alumno-id">ID del Alumno:</label>
+          <input type="text" id="alumno-id" name="alumno-id" placeholder="IDs de alumnos separados por comas" required />
+
+          <label for="grupo-id">ID del Grupo:</label>
+          <input type="text" id="grupo-id" name="grupo-id" required />
+
+          <button type="submit">Asignar</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Popup para crear grupo -->
+    <div id="create-group-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('create-group-modal')">&times;</span>
+        <form id="create-group-form">
+          <h2>Crear Nuevo Grupo</h2>
+
+          <label for="group-name">Nombre del Grupo:</label>
+          <input type="text" id="group-name" name="group-name" required />
+
+          <input type="hidden" id="profesor-id" name="profesor-id" />
+
+          <button type="submit">Crear Grupo</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal para mostrar alumnos de un grupo -->
+    <div id="students-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('students-modal')">&times;</span>
+        <table id="students-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody id="students-list">
+            <!-- Aquí se llenarán las filas de alumnos -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Sección de preguntas abiertas -->
+    <div id="preguntas-abiertas-content" class="content-section" style="display: none">
+      <h2>Revisión de Preguntas Abiertas</h2>
+              <!-- Selección de examen y grupo -->
+              <div class="filter-section">
+                <label for="exam-select">Seleccionar Examen:</label>
+                <select id="examen-select">
+                  <option value="">Selecciona un examen</option> <!-- Opciones vacías iniciales -->
+                </select>
+      
+                <label for="group-select">Seleccionar Grupo:</label>
+                <select id="grupo-select">
+                  <option value="">Selecciona un grupo</option> <!-- Opciones vacías iniciales -->
+                </select>
+      
+                <button id="btn-cargar-preguntas">Cargar Preguntas Abiertas</button>
+              </div>
+      
+              <!-- Mensaje de grupo vacío -->
+              <p id="no-questions-message" style="display: none; color: red;">No hay preguntas abiertas pendientes de revisión.</p>
+      
+              <!-- Tabla para mostrar preguntas abiertas respondidas -->
+              <table id="open-questions-table">
+                <thead>
+                  <tr>
+                    <th>Alumno</th>
+                    <th>Pregunta</th>
+                    <th>Respuesta</th>
+                    <th>Puntuación</th>
+                  </tr>
+                </thead>
+                <tbody id="open-questions-list">
+                  <!-- Aquí se llenarán las filas de preguntas abiertas -->
+                </tbody>
+              </table>
+      
+              <button onclick="submitGrades()">Guardar Puntuaciones</button>
+            </div>
+          </div>
+    </div>
+
+      </div>
+    </div>
+
+
+    <!-- Scripts de la página -->
+    <script src="preguntasExamenes.js"></script>
+    <script src="grupos.js"></script>
+    <script src="openQuestions.js"></script>
+  </body>
+</html>

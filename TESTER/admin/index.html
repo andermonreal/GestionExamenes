@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Tools</title>
+    <link rel="icon" href="./../assets/images/logo/logo2.png" />
+    <link rel="stylesheet" href="admin.css" />
+    <!-- Enlazar el archivo CSS -->
+  </head>
+  <body>
+    <header>
+      <h1>Bienvenido <span id="username">Usuario</span></h1>
+      <!-- Aquí se mostrará el nombre -->
+    </header>
+
+    <!-- Barra de búsqueda -->
+    <section>
+      <input
+        type="text"
+        id="searchBar"
+        placeholder="Buscar usuario por ID, nombre o email..."
+      />
+    </section>
+
+    <main>
+      <div class="table-container">
+        <table id="userTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <!-- Contenedor para hacer scroll solo en las filas -->
+          <tbody>
+            <!-- Las filas se generarán dinámicamente desde JavaScript -->
+          </tbody>
+        </table>
+      </div>
+      <button id="logoutButton">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+      </button>
+    </main>
+
+    <!-- Modal para modificar usuario -->
+    <div id="modify-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" id="close-modal-btn"> x </span>
+        <h2>Modificar Usuario</h2>
+        <form id="modify-form">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" required />
+
+          <label for="email">Email:</label>
+          <input type="email" id="email" required />
+
+          <label for="rol">Rol:</label>
+          <select id="rol" required>
+            <option value="0">Admin</option>
+            <option value="1">Alumno</option>
+            <option value="2">Profesor</option>
+          </select>
+
+          <button type="submit">Guardar Cambios</button>
+        </form>
+      </div>
+    </div>
+
+    <script type="module" src="generalAdmin.js"></script>
+    <!-- Archivo JavaScript -->
+  </body>
+</html>

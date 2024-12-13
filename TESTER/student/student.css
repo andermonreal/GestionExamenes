@@ -1,0 +1,463 @@
+/* Reset general */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fondo del body */
+html {
+  background-image: url("../assets/images/landing2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+body {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0.726);
+  font-family: Arial, sans-serif;
+}
+
+/* Barra lateral izquierda */
+.sidebar {
+  width: 15%;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  box-shadow: 5px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Botones de menú */
+.menu-btn {
+  background-color: white;
+  color: darkred;
+  border: 1px solid darkred;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.menu-btn:hover {
+  background-color: darkred;
+  color: white;
+  border: 1px solid white;
+  transition: 0.7s;
+}
+
+/* Logo */
+.logoUPNA {
+  width: 12rem;
+  align-self: center;
+  margin: 2rem 0 5rem 0;
+}
+
+/* Botón de cerrar sesión */
+#logoutButton {
+  background-color: #af4c4c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 15px 20px;
+  cursor: pointer;
+  margin-top: auto;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+#logoutButton:hover {
+  background-color: #ffffff;
+  color: #af4c4c;
+  border: 1px solid #af4c4c;
+}
+
+
+
+
+/* Estilo para el main */
+main {
+  display: flex;              /* Usamos flexbox para centrar */
+  justify-content: center;    /* Centrado horizontal */
+  align-items: center;        /* Centrado vertical */
+  height: 100%;               /* Ocupa todo el alto disponible */
+  flex-grow: 1;               /* Se adapta al espacio restante del layout */
+  padding: 20px;              /* Espaciado alrededor */
+  overflow: hidden;           /* Evitamos desbordamiento si el contenido es grande */
+}
+
+/* Contenedor de la tabla */
+#content {
+  display: flex;
+  justify-content: center;    /* Centrado horizontal */
+  align-items: center;        /* Centrado vertical */
+  max-width: 100%;             /* Máximo ancho relativo a la ventana */
+  max-height: 80%;            /* Máximo alto relativo a la ventana */
+  overflow: auto;             /* Permitir scroll si es necesario */
+  border-radius: 10px;
+}
+
+/* Estilo para la tabla */
+#dataTable {
+  width: 100%;                /* La tabla ocupa el ancho máximo disponible */
+  max-width: 1200px;          /* Ancho máximo fijo */
+  border-collapse: collapse;  /* Elimina espacios entre celdas */
+  background-color: darkred; /* Fondo blanco semitransparente */
+  border-radius: 8px;         /* Bordes redondeados */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Encabezado de la tabla */
+#tableHead {
+  background-color: darkred;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+}
+
+/* Filas de la tabla */
+#tableBody tr:nth-child(even) {
+  background-color: rgba(240, 240, 240, 0.8); /* Gris suave */
+}
+
+#tableBody tr:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 1); /* Blanco puro */
+}
+
+/* Celdas de la tabla */
+.styled-table th, .styled-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid rgba(200, 200, 200, 0.5); /* Bordes sutiles */
+}
+
+/* Media Queries para pantallas más pequeñas */
+@media (max-width: 768px) {
+  #dataTable {
+    font-size: 14px;
+  }
+
+  .styled-table th, .styled-table td {
+    padding: 8px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  #dataTable {
+    font-size: 12px;
+  }
+
+  .styled-table th, .styled-table td {
+    padding: 6px 8px;
+  }
+}
+
+/* Botón de revisar generado dinámicamente en cada fila */
+.revisar-btn, .realizar-btn{
+  background-color: rgba(139, 0, 0, 1); /* Dark red */
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover para el botón "revisar" */
+.revisar-btn:hover, .realizar-btn:hover {
+  background-color: rgba(139, 0, 0, 0.8); /* Color al pasar el mouse */
+}
+
+
+
+
+
+
+
+
+/* Estilo del modal (ventana emergente) */
+.modal {
+  display: none; /* Oculto por defecto */
+  position: fixed; /* Fijo en la pantalla */
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+  overflow-y: auto; /* Permite desplazamiento vertical si es necesario */
+}
+
+/* Estilo del contenido del modal */
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 90%; /* Ajuste de ancho para pantallas más pequeñas */
+  max-width: 600px; /* Máximo ancho en pantallas grandes */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+  border-radius: 8px; /* Bordes redondeados */
+  box-sizing: border-box; /* Asegura que padding y border se incluyan en el ancho total */
+  
+  /* Centrado vertical y horizontal */
+  position: absolute; /* Cambiar a absolute para centrar con top/bottom */
+  top: 50%; /* Coloca el elemento en el centro de la ventana */
+  left: 50%; /* Coloca el elemento en el centro de la ventana */
+  transform: translate(-50%, -50%); /* Ajusta el elemento para que esté perfectamente centrado */
+}
+
+/* Botón de cierre del modal */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Fondo general para el modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro con opacidad */
+  display: none; /* Oculto por defecto */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Asegúrate de que el modal esté encima de todo */
+  overflow: hidden;
+}
+
+/* Contenido del modal */
+.modal-content {
+  background-color: white;
+  border-radius: 15px; /* Borde más redondeado para un estilo más suave */
+  padding: 30px; /* Espaciado dentro del modal */
+  width: 80%; /* Aumentamos el ancho */
+  max-width: 900px; /* Aumentamos el tamaño máximo */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Sombra más prominente */
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Estilos para el encabezado */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 15px; /* Más espacio debajo del encabezado */
+}
+
+.modal-header h3 {
+  font-size: 28px; /* Aumentamos el tamaño del título */
+  margin: 0;
+  color: #333;
+}
+
+.modal-header h5 {
+  font-size: 18px; /* Aumentamos el tamaño del subtítulo */
+  margin: 0;
+  color: #666;
+}
+
+.modal-header button {
+  background-color: transparent;
+  border: none;
+  font-size: 16px; /* Aumentamos el tamaño de la fuente del botón */
+  color: #c0392b;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.modal-header button:hover {
+  color: #e74c3c;
+}
+
+/* Cuerpo del modal */
+.modal-body {
+  display: grid;
+  padding: 30px 0; /* Aumentamos el padding superior e inferior */
+  overflow-y: auto;
+  max-height: 70vh; /* Limitar la altura del cuerpo */
+}
+
+/* Estilos para los divs dentro del cuerpo */
+#modal-revision-question,
+#modal-revision-options,
+#modal-revision-answer {
+  margin-bottom: 30px; /* Aumentamos el margen entre los divs */
+}
+
+#modal-revision-question {
+  font-size: 24px;
+}
+
+#modal-revision-options {
+  display: flex;
+  flex-direction: column;
+}
+
+#modal-revision-options div {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px; /* Bordes más redondeados */
+  font-size: 18px; /* Aumentamos el tamaño de la fuente */
+}
+
+/* Estilos para el pie del modal */
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 25px; /* Aumentamos el padding superior */
+}
+
+.modal-footer button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  background-color: #e74c3c; /* DarkRed */
+  color: white;
+  font-size: 18px; /* Aumentamos el tamaño de la fuente */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.modal-footer button:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+.modal-footer button:active {
+  transform: translateY(2px);
+}
+
+/* Estilos específicos para el botón "marcar para revisar" */
+.modal-revision-revisar-button {
+  background-color: #2980b9;
+}
+
+.modal-revision-revisar-button:hover {
+  background-color: #3498db;
+}
+
+.modal-revision-revisar-button:active {
+  background-color: #1f6fa7;
+}
+
+/* Botones de navegación (anterior/siguiente) */
+.modal-revision-manejo-button {
+  background-color: #16a085;
+}
+
+.modal-revision-manejo-button:hover {
+  background-color: #1abc9c;
+}
+
+.modal-revision-manejo-button:active {
+  background-color: #16a085;
+}
+.modal-body {
+  padding: 20px 0;
+  overflow-y: auto;
+  max-height: 60vh; /* Limitar la altura del cuerpo */
+}
+
+/* Estilos para los divs dentro del cuerpo */
+#modal-revision-question,
+#modal-revision-options,
+#modal-revision-answer {
+  margin-bottom: 20px;
+}
+
+
+input[type="checkbox"] {
+  appearance: none; /* Elimina el estilo predeterminado */
+  width: 15px;
+  height: 15px;
+  border: 1px solid #8b0000; /* Color del borde */
+  border-radius: 4px; /* Esquinas redondeadas */
+  background-color: white; /* Fondo inicial */
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Estilo al marcar el checkbox */
+input[type="checkbox"]:checked {
+  background-color: #8b0000; /* Fondo al marcar */
+  border-color: #8b0000; /* Color del borde al marcar */
+}
+
+/* Opcional: Hover en el checkbox */
+input[type="checkbox"]:hover {
+  border-color: rgba(139, 0, 0, 0.8); /* Color más claro al pasar el mouse */
+}
+
+/* Estilo del texto al lado del checkbox */
+.checkbox-label {
+  font-size: 16px;
+  color: #333;
+  margin-left: 10px; /* Espacio entre el checkbox y el texto */
+  cursor: pointer;
+}
+
+
+/* Estilo básico del radio button */
+input[type="radio"] {
+  appearance: none; /* Elimina el estilo predeterminado */
+  width: 20px;
+  height: 20px;
+  border: 2px solid #8b0000; /* Color del borde */
+  border-radius: 50%; /* Círculo */
+  background-color: white; /* Fondo inicial */
+  cursor: pointer;
+  margin-right: 10px; /* Espaciado entre el botón y el texto */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Estado seleccionado */
+input[type="radio"]:checked {
+  background-color: #8b0000; /* Color al seleccionar */
+  border-color: #8b0000;
+}
+
+/* Hover en el radio button */
+input[type="radio"]:hover {
+  border-color: rgba(139, 0, 0, 0.8); /* Color más claro al pasar el mouse */
+}
+
+/* Estilo de la etiqueta */
+.radio-label {
+  font-size: 16px;
+  color: #333;
+  cursor: pointer; /* Cambia el cursor al pasar sobre la etiqueta */
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 8px; /* Espaciado entre opciones */
+}

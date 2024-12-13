@@ -1,0 +1,1051 @@
+/* Reset general */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1); /* Capa de oscurecimiento */
+  pointer-events: none; /* Permite la interacción con elementos debajo */
+  z-index: 1;
+}
+
+/* Estilo del modal (ventana emergente) */
+.modal {
+  display: none; /* Oculto por defecto */
+  position: fixed; /* Fijo en la pantalla */
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+  overflow-y: auto; /* Permite desplazamiento vertical si es necesario */
+}
+
+/* Estilo del contenido del modal */
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 90%; /* Ajuste de ancho para pantallas más pequeñas */
+  max-width: 600px; /* Máximo ancho en pantallas grandes */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+  border-radius: 8px; /* Bordes redondeados */
+  box-sizing: border-box; /* Asegura que padding y border se incluyan en el ancho total */
+  
+  /* Centrado vertical y horizontal */
+  position: absolute; /* Cambiar a absolute para centrar con top/bottom */
+  top: 50%; /* Coloca el elemento en el centro de la ventana */
+  left: 50%; /* Coloca el elemento en el centro de la ventana */
+  transform: translate(-50%, -50%); /* Ajusta el elemento para que esté perfectamente centrado */
+}
+
+/* Botón de cierre del modal */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Estilo para los campos del formulario */
+.form-field {
+  margin-bottom: 15px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.errorMSG {
+  color: red;
+  margin-top: 10px;
+}
+
+/* Aseguramos que en pantallas más pequeñas el contenido no se corte */
+@media (max-width: 600px) {
+  .modal-content {
+    width: 95%; /* Más ajuste para pantallas pequeñas */
+  }
+}
+
+html {
+  background-image: url("../assets/images/landing2.jpg"); /* Imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+body {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0.726); /* Filtro oscuro */
+  font-family: Arial, sans-serif;
+}
+
+h2,
+h3 {
+  color: #333;
+}
+
+.sidebar {
+  width: 15%;
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  box-shadow: 5px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.menu-btn {
+  background-color: white;
+  color: darkred;
+  border: 1px solid darkred;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.menu-btn:hover {
+  background-color: darkred;
+  color: white;
+  border: 1px solid white;
+  transition: 0.7s;
+}
+
+.logoUPNA {
+  width: 12rem;
+  align-self: center;
+  margin: 2rem 0 5rem 0;
+}
+.main-content {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  background-color: rgba(241, 241, 241, 0.4);
+}
+
+#preguntas-content {
+  background-color: #ffffff;
+  height: 100%;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 1rem;
+}
+
+#preguntas-content h2 {
+  color: #333;
+  font-size: 2rem;
+  align-self: center;
+  margin-bottom: 1.5rem;
+}
+
+.content-section {
+  display: none;
+}
+
+.question-type-selector {
+  display: flex;
+  gap: 1rem;
+  margin: 3rem 0 1.5rem;
+}
+
+.question-type-selector button {
+  background-color: #af4c4c;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.question-type-selector button:hover {
+  background-color: darkred;
+}
+
+.table-container {
+  max-width: 100%; /* Se adapta al ancho del contenedor principal */
+  height: 70%; /* Define una altura fija para el contenedor de la tabla */
+  overflow-y: auto; /* Activa el desplazamiento vertical */
+  overflow-x: auto; /* Activa el desplazamiento horizontal si es necesario */
+  margin-bottom: 1rem; /* Espacio inferior */
+  position: relative;
+}
+
+/* Tabla de preguntas */
+#questions-table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: separate;
+  color: #333; /* Color del texto en la tabla */
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Centrar las columnas que no son Texto en la tabla de preguntas */
+#questions-table tbody td:nth-child(1), /* ID */
+#questions-table tbody td:nth-child(3), /* Tipo */
+#questions-table tbody td:nth-child(4),/* Puntuación */
+#questions-table tbody td:nth-child(5),
+#questions-table tbody td:nth-child(6),
+#questions-table tbody td:nth-child(7) {
+  /* Acciones */
+  text-align: center;
+}
+
+#questions-table thead th:nth-child(1),
+#questions-table thead th:nth-child(3),
+#questions-table thead th:nth-child(4),
+#questions-table thead th:nth-child(5),
+#questions-table thead th:nth-child(6) {
+  text-align: center;
+}
+
+/* Establecer ancho específico para la columna de Texto */
+#questions-table thead th:nth-child(2), /* Encabezado de Texto */
+#questions-table tbody td:nth-child(2) {
+  /* Celdas de Texto */
+  width: 65%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Justificar el texto de las preguntas */
+#questions-table tbody td:nth-child(2) {
+  text-align: justify;
+  width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Justificar el texto de las preguntas */
+#questions-table tbody td:nth-child(1) {
+  width: 5%;
+}
+
+/* Fijar el encabezado de la tabla */
+#questions-table thead {
+  position: sticky;
+  top: 0;
+  background-color: #af4c4c; /* Color de fondo del encabezado */
+  z-index: 5; /* Asegura que el encabezado se mantenga detrás del modal */
+}
+
+/* Estilos del encabezado de la tabla */
+#questions-table thead th {
+  padding: 0.75rem;
+  color: white;
+  text-align: left;
+  font-weight: bold;
+}
+#questions-table tbody td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #ddd;
+  color: #333;
+}
+
+#questions-table tbody tr:nth-child(even) {
+  background-color: #fce5e5; /* Color de fondo para las filas pares */
+}
+
+#questions-table tbody tr:nth-child(odd) {
+  background-color: #f1f1f1; /* Color de fondo para las filas impares */
+}
+
+#questions-table tbody tr:hover {
+  background-color: #e4b8b8; /* Cambiar color al pasar el mouse */
+}
+
+/* Botones de acción en la tabla */
+#questions-table tbody .actions button {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+#questions-table tbody .actions button:hover {
+  background-color: #0b7dda;
+}
+
+.details-button,
+.assign-button {
+  background-color: #af4c4c;
+  color: white;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+  margin-right: 0.5rem;
+  width: 6rem;
+}
+
+.star-button {
+  padding: 1rem;
+  background-color: transparent;
+  color: #af4c4c;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 2rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.star-button.star-filled {
+  transition: color 0.3s, color 0.3s;
+  color: gold;
+  text-shadow: 0px 0px 1px darkred, -1px 1px 2px darkred;
+}
+.star-button:hover {
+  color: darkred;
+}
+
+.details-button:hover,
+.assign-button:hover {
+  background-color: white;
+  color: darkred;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000; /* Mayor que el z-index del encabezado */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 5% auto;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  width: 50%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.close-btn {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+  color: #af4c4c;
+}
+
+.question-form div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 0;
+}
+
+.question-form textarea {
+  padding: 2rem;
+}
+
+.question-form input[type="text"] {
+  flex-grow: 1; /* Expandir el campo de texto para ocupar más espacio */
+  padding: 1rem;
+}
+
+/* Tamaño de los checkboxes y radio buttons */
+.question-form input[type="radio"],
+.question-form input[type="checkbox"] {
+  transform: scale(1.5);
+  margin-left: 1rem;
+  padding: 0;
+  margin: 0;
+}
+
+.question-form form label {
+  color: #333;
+}
+
+.question-form button[type="submit"] {
+  margin-top: 2rem;
+}
+
+.question-form h3 {
+  margin-bottom: 2rem;
+}
+
+label {
+  font-size: 1rem;
+  color: #333;
+}
+
+textarea,
+input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  width: 100%;
+  font-size: 1rem;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  width: auto;
+}
+
+button[type="submit"] {
+  background-color: #af4c4c;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: darkred;
+}
+
+.details-modal {
+  color: black;
+  text-align: center;
+  width: 100%;
+}
+
+#details-content {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  line-height: 1.5; /* Aumenta el espacio entre líneas */
+}
+
+#logoutButton {
+  background-color: #af4c4c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 15px 20px;
+  cursor: pointer;
+  margin-top: auto;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+#logoutButton:hover {
+  background-color: #ffffff;
+  color: #af4c4c;
+  border: 1px solid #af4c4c;
+}
+
+/* Estilo de tabla para la sección de grupos */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.9
+  ); /* Fondo blanco semitransparente */
+  border-radius: 0.25rem;
+  overflow: hidden; /* Para ajustar el borde redondeado */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Margen superior de la tabla */
+#alumnosTable {
+  margin-top: 2rem;
+}
+
+thead {
+  background-color: darkred;
+  color: white;
+  text-align: left;
+  font-weight: bold;
+}
+
+th,
+td {
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+  background-color: rgba(255, 0, 0, 0.1); /* Fila resaltada */
+}
+
+tbody tr:nth-child(even) {
+  background-color: rgba(245, 245, 245, 0.8); /* Fondo alternado para filas */
+}
+
+th {
+  font-size: 1rem;
+}
+
+td {
+  color: #333;
+  font-size: 0.9rem;
+}
+
+button {
+  background-color: darkred;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Margen inferior del botón */
+.question-type-selector button {
+  margin-bottom: 2rem;
+}
+
+button:hover {
+  background-color: red;
+}
+
+#student-search-results {
+  color: black; /* Establece el color del texto a negro */
+}
+/* Estilo de tabla para la sección de grupos */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.9
+  ); /* Fondo blanco semitransparente */
+  border-radius: 0.25rem;
+  overflow: hidden; /* Para ajustar el borde redondeado */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Margen superior de la tabla */
+#alumnosTable {
+  margin-top: 2rem;
+}
+
+thead {
+  background-color: darkred;
+  color: white;
+  text-align: left;
+  font-weight: bold;
+}
+
+th,
+td {
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+  background-color: rgba(255, 0, 0, 0.1); /* Fila resaltada */
+}
+
+tbody tr:nth-child(even) {
+  background-color: rgba(245, 245, 245, 0.8); /* Fondo alternado para filas */
+}
+
+th {
+  font-size: 1rem;
+}
+
+td {
+  color: #333;
+  font-size: 0.9rem;
+}
+
+button {
+  background-color: darkred;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Margen inferior del botón */
+.question-type-selector button {
+  margin-bottom: 2rem;
+}
+
+button:hover {
+  background-color: red;
+}
+
+.modal {
+  display: none; /* Oculto por defecto */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+}
+
+.close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Reset general */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1); /* Capa de oscurecimiento */
+  pointer-events: none; /* Permite la interacción con elementos debajo */
+  z-index: 1;
+}
+
+/* Estilo del modal (ventana emergente) */
+.modal {
+  display: none; /* Oculto por defecto */
+  position: fixed;
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+  overflow-y: auto; /* Permite desplazamiento vertical si es necesario */
+}
+
+/* Estilo del contenido del modal */
+.modal-content {
+  color: #333;
+  background-color: #fff;
+  margin: 5% auto; /* Centrado vertical y horizontal */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 90%; /* Ajuste de ancho para pantallas más pequeñas */
+  max-width: 600px; /* Máximo ancho en pantallas grandes */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+  border-radius: 8px; /* Bordes redondeados */
+  box-sizing: border-box; /* Asegura que padding y border se incluyan en el ancho total */
+}
+
+/* Estilos específicos para diferentes modales */
+#details-modal .modal-content,
+#assign-modal .modal-content,
+#create-exam-modal .modal-content,
+#question-modal .modal-content,
+#students-modal .modal-content,
+#create-group-modal .modal-content {
+  padding: 1.5rem 2rem;
+  background-color: #fafafa; /* Fondo ligeramente más claro */
+  max-width: 700px;
+}
+
+#assign-modal .modal-content,
+#create-group-modal .modal-content {
+  padding: 20px 30px;
+}
+
+.details-modal {
+  color: black;
+  text-align: center;
+  width: 100%;
+}
+
+/* Botón de cierre del modal */
+.close,
+.close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus,
+.close-btn:hover,
+.close-btn:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Estilo para los campos del formulario */
+.form-field {
+  margin-bottom: 15px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.errorMSG {
+  color: red;
+  margin-top: 10px;
+}
+
+/* Aseguramos que en pantallas más pequeñas el contenido no se corte */
+@media (max-width: 600px) {
+  .modal-content {
+    width: 95%; /* Más ajuste para pantallas pequeñas */
+  }
+}
+
+html {
+  background-image: url("../assets/images/landing2.jpg"); /* Imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+body {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0.726); /* Filtro oscuro */
+  font-family: Arial, sans-serif;
+}
+
+h2,
+h3 {
+  color: #333;
+}
+
+.sidebar {
+  width: 15%;
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  box-shadow: 5px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.menu-btn {
+  background-color: white;
+  color: darkred;
+  border: 1px solid darkred;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.menu-btn:hover {
+  background-color: darkred;
+  color: white;
+  border: 1px solid white;
+  transition: 0.7s;
+}
+
+.logoUPNA {
+  width: 12rem;
+  align-self: center;
+  margin: 2rem 0 5rem 0;
+}
+
+.main-content {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  background-color: rgba(241, 241, 241, 0.4);
+}
+
+/* Estilo compartido para las secciones principales de contenido */
+.content-section {
+  background-color: #ffffff;
+  height: 100%;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 1rem;
+}
+
+.content-section h2 {
+  color: #333;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.table-container {
+  max-width: 100%; /* Se adapta al ancho del contenedor principal */
+  height: 70%; /* Define una altura fija para el contenedor de la tabla */
+  overflow-y: auto; /* Activa el desplazamiento vertical */
+  overflow-x: auto; /* Activa el desplazamiento horizontal si es necesario */
+  margin-bottom: 1rem; /* Espacio inferior */
+  position: relative;
+}
+
+/* Tabla de contenido para Preguntas, Exámenes y Grupos */
+.content-section table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: separate;
+  color: #333; /* Color del texto en la tabla */
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content-section table thead {
+  position: sticky;
+  top: 0;
+  background-color: #af4c4c; /* Color de fondo del encabezado */
+  z-index: 5; /* Asegura que el encabezado se mantenga detrás del modal */
+}
+
+.content-section table thead th {
+  padding: 0.75rem;
+  color: white;
+  text-align: left;
+  font-weight: bold;
+}
+
+.content-section table tbody td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #ddd;
+  color: #333;
+}
+
+.content-section table tbody tr:nth-child(even) {
+  background-color: #fce5e5; /* Color de fondo para las filas pares */
+}
+
+.content-section table tbody tr:nth-child(odd) {
+  background-color: #f1f1f1; /* Color de fondo para las filas impares */
+}
+
+.content-section table tbody tr:hover {
+  background-color: #e4b8b8; /* Cambiar color al pasar el mouse */
+  cursor: pointer;
+}
+
+/* Botones de acción dentro de las tablas */
+.details-button,
+.assign-button,
+.students-button {
+  background-color: #af4c4c;
+  color: white;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+  margin-right: 0.5rem;
+  width: 6rem;
+  user-select: none;
+}
+
+.students-button {
+  align-self: center;
+  width: 9rem;
+}
+
+#gruposTable tbody td:nth-child(2),
+#gruposTable thead th:nth-child(2) {
+  width: 70%;
+}
+
+#gruposTable tbody td:nth-child(1),
+#gruposTable thead th:nth-child(1) {
+  width: 5rem;
+}
+
+#questions-list td:nth-child(1),
+#questions-list th:nth-child(1) {
+  width: 5rem;
+}
+
+/* Centrar el contenido de la tercera columna en gruposTable */
+#gruposTable tbody td:nth-child(1),
+#gruposTable thead th:nth-child(1),
+#gruposTable tbody td:nth-child(3),
+#gruposTable thead th:nth-child(3) {
+  text-align: center;
+}
+
+.details-button:hover,
+.assign-button:hover {
+  background-color: white;
+  color: darkred;
+}
+
+/* Otros botones dentro de las secciones */
+.question-type-selector {
+  display: flex;
+  gap: 1rem;
+  margin: 3rem 0 1.5rem;
+}
+
+.question-type-selector button {
+  background-color: #af4c4c;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.question-type-selector button:hover {
+  background-color: darkred;
+}
+
+/* Botón de cerrar sesión */
+#logoutButton {
+  background-color: #af4c4c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 15px 20px;
+  cursor: pointer;
+  margin-top: auto;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+#logoutButton:hover {
+  background-color: #ffffff;
+  color: #af4c4c;
+  border: 1px solid #af4c4c;
+}
+
+/* Ajustes de campos en los formularios */
+textarea,
+input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  width: 100%;
+  font-size: 1rem;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  width: auto;
+}
+
+button[type="submit"] {
+  background-color: #af4c4c;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: darkred;
+}
+
+#details-content {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  line-height: 1.5; /* Aumenta el espacio entre líneas */
+}
+
+#student-search-results {
+  color: black; /* Establece el color del texto a negro */
+}
+
+.favorite-button-active {
+  background-color: rgb(
+    238,
+    238,
+    179
+  ) !important ; /* Fondo amarillo para indicar que está activo */
+  color: darkred !important; /* Cambiar color de texto */
+  border: 1px solid darkred !important; /* Borde para resaltar */
+}

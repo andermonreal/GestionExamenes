@@ -1,0 +1,64 @@
+{
+  "name": "upna-tester",
+  "version": "1.0.0",
+  "description": "Aplicación de examenes para la Universidad Publica de Navarra",
+  "author": {
+    "name": "Alejandro Meléndez Uriz",
+    "email": "alejandromelendez2014@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Ander Monreal Ayanz"
+    },
+    {
+      "name": "Iñaki Mellado Ilundain"
+    },
+    {
+      "name": "Diego Liebana Revuelta"
+    }
+  ],
+  "main": "main.js",
+  "dependencies": {
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "electron": "^33.0.2",
+    "electron-builder": "^25.1.8"
+  },
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.gpi.upna-tester",
+    "productName": "UPNA Tester",
+    "files": [
+      "main.js",
+      "TESTER/**/*",
+      "preload.js",
+      "package.json",
+      "node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "API",
+        "to": "API",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": ".env",
+        "to": ".env"
+      }
+    ],
+    "asar": true,
+    "win": {
+      "icon": "./assets/logo.ico",
+      "sign": false
+    },
+    "directories": {
+      "output": "dist"
+    }
+  }
+}

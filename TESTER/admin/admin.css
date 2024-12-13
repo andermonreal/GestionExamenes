@@ -1,0 +1,241 @@
+/* Reset general */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-image: url("../assets/images/landing2.jpg"); /* Imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: white; /* Color de texto predeterminado */
+  width: 100vw;
+  align-self: center;
+  background-color: rgb(0, 0, 0, 0.7);
+}
+
+header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem; /* Espacio inferior */
+  margin-top: 2rem; /* Añadir margen superior para moverlo hacia abajo */
+}
+
+h1 {
+  color: rgb(211, 162, 162); /* Color del título */
+  margin: 3rem 0 1.5rem 0; /* Margen superior e inferior */
+}
+
+#username {
+  color: rgb(211, 162, 162); /* Color del nombre de usuario */
+}
+
+/* Estilo para el contenedor de la barra de búsqueda */
+section {
+  position: relative; /* Permite el uso de posicionamiento absoluto dentro de este contenedor */
+  width: 15%; /* Asegura que el contenedor ocupa todo el ancho de la página */
+  display: flex; /* Habilita el uso de flexbox */
+  justify-content: center; /* Centra los elementos hijos horizontalmente */
+  margin: 1rem 0 4rem 0; /* Espaciado arriba y abajo */
+}
+
+/* Estilo para la barra de búsqueda */
+#searchBar {
+  position: absolute; /* Permite que el input se posicione con respecto al contenedor */
+  left: 50%; /* Mueve el input al 50% desde la izquierda */
+  transform: translateX(
+    -50%
+  ); /* Mueve el input a la izquierda la mitad de su propio ancho para centrarlo */
+  width: 150%; /* Establece el ancho al 150% */
+  max-width: none; /* Elimina cualquier limitación de ancho máximo */
+  height: 2.5rem; /* Altura de la barra de búsqueda */
+  padding: 0.5rem; /* Espaciado interno */
+  font-size: 1rem; /* Tamaño de fuente */
+  border: 1px solid #ccc; /* Borde estándar */
+  border-radius: 0.25rem; /* Esquinas redondeadas */
+  transition: border 0.3s; /* Transición suave para el borde */
+}
+
+#searchBar:focus {
+  border: 1px solid red; /* Cambia el color del borde al enfocar */
+  outline: none; /* Elimina el borde por defecto al enfocar */
+}
+
+main {
+  flex: 1; /* Ocupa el espacio restante */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrar elementos */
+  padding: 1rem; /* Espaciado interno */
+  width: 80%;
+}
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-height: 600px; /* Define una altura fija para el contenedor de la tabla */
+  overflow-y: auto; /* Activa el desplazamiento vertical */
+  overflow-x: auto; /* Activa el desplazamiento horizontal si es necesario */
+  margin-bottom: 1rem; /* Espacio inferior */
+  /* Ocultar barras de desplazamiento en navegadores webkit */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Estilo para la tabla */
+table {
+  width: 80%; /* Ancho de la tabla */
+  border-collapse: collapse; /* Colapsar bordes */
+  margin: 1.5rem 0; /* Espacio superior e inferior */
+  margin-bottom: 1rem; /* Espacio inferior */
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
+  color: #333; /* Color del texto en la tabla */
+  border-radius: 10px; /* Redondear bordes de la tabla */
+  overflow: hidden; /* Asegurarse de que el contenido se ajuste al borde redondeado */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Agregar una sombra para más estilo */
+}
+
+th,
+td {
+  padding: 0.7rem 1.5rem;
+}
+
+th {
+  background-color: darkred; /* Fondo de encabezados */
+  text-align: left; /* Alinear texto a la izquierda */
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #fce5e5; /* Color de fondo para las filas pares */
+}
+
+tr:nth-child(odd) {
+  background-color: #f1f1f1; /* Color de fondo para las filas impares */
+}
+
+tr:hover {
+  background-color: #e4b8b8; /* Cambiar color al pasar el mouse */
+}
+
+/* Estilo para los botones de cerrar sesión */
+#logoutButton {
+  position: absolute; /* Posición absoluta */
+  top: 20px; /* Distancia desde la parte superior */
+  right: 20px; /* Distancia desde la parte derecha */
+  padding: 10px 20px;
+  background-color: #af4c4c; /* Color de fondo */
+  color: white; /* Color del texto */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Mostrar cursor de clic */
+}
+
+#logoutButton:hover {
+  background-color: #d32f2f; /* Cambiar color al pasar el ratón */
+}
+
+/* Estilo para los botones de modificar y eliminar */
+.modify-button,
+.delete-button {
+  background-color: darkred; /* Color de fondo rojo */
+  color: white; /* Color de texto blanco */
+  border: none; /* Sin borde */
+  padding: 0.375rem 0.625rem; /* Espaciado interno reducido */
+  border-radius: 0.25rem; /* Bordes redondeados */
+  cursor: pointer; /* Cursor tipo puntero */
+  font-size: 0.875rem; /* Tamaño de fuente más pequeño */
+  transition: background-color 0.3s; /* Transición de fondo */
+}
+
+.modify-button:hover,
+.delete-button:hover {
+  background-color: white;
+  color: darkred; /* Fondo al pasar el ratón */
+}
+
+/* Estilo para el contenedor de botones */
+#userTable td div {
+  display: flex; /* Alinear los botones en una fila */
+}
+
+/* Estilos para el modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+}
+
+.modal-content {
+  background-color: white;
+  margin: 10% auto;
+  padding: 20px;
+  width: 300px;
+  height: 400px;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Añadir sombra al modal */
+}
+
+.close-btn {
+  color: red;
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px; /* Agregar un poco de padding para mejorar el área de clic */
+}
+
+.close-btn:hover {
+  color: darkred;
+}
+
+/* Estilos para los campos del modal */
+input[type="text"],
+input[type="email"],
+select {
+  font-size: 0.9rem;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+select {
+  margin-bottom: 4rem;
+}
+
+button[type="submit"] {
+  background-color: red;
+  color: white;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: darkred;
+}

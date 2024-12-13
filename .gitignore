@@ -1,0 +1,7 @@
+API/.env
+
+API/node_modules
+API/package-lock.json
+node_modules/
+package-lock.json
+dist
